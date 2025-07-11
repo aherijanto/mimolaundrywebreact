@@ -302,7 +302,7 @@ $(document).ready(function() {
                                         onClose: function(){window.location.href = "https://app.vizta.co.id/vizta/campaign/inviz20/pending?id="+indexSales;}
                                     });
                                 }
-                                else
+                                else //else
                                 if(respon[0] == 'OTP'){
                                     Swal.fire({
                                         icon: 'error',
