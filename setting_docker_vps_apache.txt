@@ -1,0 +1,135 @@
+##################################################
+#                                                #
+#  Date       : 2025-03-21                       #
+#  Version    : 1.0                              #
+#  Description: Tutorial installing Docker VPS   #
+#  Engine     : Apache2                          #
+#  OS         : Ubuntu 20.04 LTS                 #
+#  Author     : Ary Herijanto  bistique          #
+#                                                #
+##################################################
+
+
+1. Connect to VPS
+    ssh user@<ip-address>
+
+2. Install Docker
+    sudo apt update
+    sudo apt install docker.io
+
+3. (optional)
+    sudo apt install docker-compose
+
+4. Archive codes
+    tar -czf codes.tar.gz /home/user/codes
+
+5. Copy to VPS
+    scp codes.tar.gz user@203.175.11.46:/home/user/
+
+6. Extract archive to destination folder
+    ssh user@<ip-address>
+    cd /home/user/
+    tar -xzvf <filename>.tar.gz
+    cd <folder>
+
+7. Make .env
+    nano .env
+    DATABASE_URL="mysql://user:password@db:3306/<database-name>"
+
+8. Configure docker-compose.yml:
+    version: "3.8"
+
+    services:
+    db:
+        image: mysql:8
+        restart: always
+        environment:
+        MYSQL_ROOT_PASSWORD: <rootpassword>
+        MYSQL_USER: <user>
+        MYSQL_PASSWORD: <password>
+        MYSQL_DATABASE: <database-name>
+        volumes:
+        - db_data:/var/lib/mysql
+
+    app:
+        build: .
+        ports:
+        - "3000:3000"  # Keep internal port mapping
+        depends_on:
+        - db
+        environment:
+        DATABASE_URL: mysql://user:password@db:3306/<database-name>
+        volumes:
+        - .:/app
+        working_dir: /app
+        command: sh -c "npm run dev"
+
+    volumes:
+    db_data:
+
+9. Install APACHE
+    sudo apt update
+    sudo apt install apache2
+
+10. Enabled Proxy module
+    sudo a2enmod proxy
+    sudo a2enmod proxy_http
+    sudo a2enmod rewrite
+    sudo systemctl restart apache2
+
+11. Create Host configuration
+    sudo nano /etc/apache2/sites-available/<config-file>.conf
+
+12. Edit configuration
+    <VirtualHost *:80>
+        ServerName <ip-address>
+
+        ProxyPreserveHost On
+        ProxyPass / http://localhost:3000/
+        ProxyPassReverse / http://localhost:3000/
+
+        ErrorLog ${APACHE_LOG_DIR}/<filename-log_error>.log
+        CustomLog ${APACHE_LOG_DIR}/<filename-access>.log combined
+    </VirtualHost>
+
+13. Enable sites
+    sudo a2ensite <conf-filename>.conf
+
+14. Test configuration
+    sudo apachectl configtest
+    sudo systemctl restart apache2
+
+15. Allow port 80
+    sudo ufw allow 80
+    sudo ufw enable
+
+16. Install SSL Encrypt
+    sudo apt update
+    sudo apt install certbot python3-certbot-apache
+    sudo certbot --apache -d <ip-address>
+
+17. Migrate Database
+    docker compose exec app npx prisma generate
+    docker compose exec app npx prisma migrate dev --name init
+
+
+18. Optional setting for SSL
+    <VirtualHost *:80>
+        ServerName <place_your_domain>
+        Redirect permanent / <place_your_domain>
+    </VirtualHost>
+
+    <VirtualHost *:443>
+        ServerName <domain_name>
+
+        SSLEngine On
+        SSLCertificateFile /etc/letsencrypt/live/<domain_folder>/fullchain.pem
+        SSLCertificateKeyFile /etc/letsencrypt/live/<domain_folder>/privkey.pem
+
+        ProxyPreserveHost On
+        ProxyPass / http://localhost:3000/
+        ProxyPassReverse / http://localhost:3000/
+
+        ErrorLog ${APACHE_LOG_DIR}/<file-log_error>.log
+        CustomLog ${APACHE_LOG_DIR}/<file-log_access>.log combined
+    </VirtualHost>

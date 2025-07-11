@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  name  String
+  email String @unique
+  pass  String?
+  fcmid String
+}
+
+model Machine{
+  id       Int    @id @default(autoincrement())
+  code_machine String 
+  name_machine String 
+  brand_machine String
+  model_machine String
+  year_machine String
+  status_machine String
+}
+
+model Machine_Running{
+  id       Int    @id @default(autoincrement())
+  code_machine String 
+  running_machine Boolean
+  start_time DateTime
+  end_time DateTime
+}
+
+model Trans_Laundry{
+  id       Int    @id @default(autoincrement())
+  no_trans String
+  code_machine String
+  request_by String
+  date_trans DateTime
+  payment_status Boolean
+  order_from String?
+}
+
+model Payment{
+  id       Int    @id @default(autoincrement())
+  no_trans String
+  datetime_trans DateTime
+  amount_trans Float
+  payment_method String
+  payment_status Boolean
+}
+

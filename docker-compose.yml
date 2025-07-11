@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mimo241203
+      POSTGRES_DB: mimolaundry
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgres://postgres:mimo241203@db:5432/mimolaundry
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - db
+
+volumes:
+  db_data:
