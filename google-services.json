@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "922503966969",
+    "project_id": "mimolaundry-1a355",
+    "storage_bucket": "mimolaundry-1a355.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922503966969:android:eaec07dcbaf8e32b64b228",
+        "android_client_info": {
+          "package_name": "com.mimoapps.mimolaundry"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeYUHop1jC_7cI1WBZzf-YJjLFsyCABPs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

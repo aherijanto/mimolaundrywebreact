@@ -119,6 +119,15 @@ function NavigationDrawer({ onLogout }: { onLogout: () => void }) {
             Users
           </button>
         </li>
+
+        <li>
+          <button
+            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2"
+            onClick={() => router.push("/fcm-messaging")}
+          >
+            Send Message
+          </button>
+        </li>
       </ul>
       <button
         className="m-4 bg-blue-100 text-blue-700 px-4 py-2 rounded font-semibold hover:bg-blue-100"
