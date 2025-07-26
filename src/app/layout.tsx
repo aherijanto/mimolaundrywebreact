@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaHome, FaPlus, FaList, FaMobileAlt, FaHistory, FaCog, FaUsers, FaEnvelope, FaThLarge, FaUserShield } from "react-icons/fa";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +30,10 @@ function NavigationDrawer({ onLogout }: { onLogout: () => void }) {
       <ul className="flex-1 p-4 flex flex-col gap-2">
         <li>
           <button
-            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2"
+            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2 flex items-center gap-2"
             onClick={() => router.push("/dashboard")}
           >
-            Dashboard
+            <FaHome />Dashboard
           </button>
         </li>
         {/* Dropdown menu for Transactions */}
@@ -43,7 +44,7 @@ function NavigationDrawer({ onLogout }: { onLogout: () => void }) {
             aria-expanded={showTransactions}
             aria-controls="transactions-submenu"
           >
-            Transactions
+            <FaList /> Transactions
             <span className="ml-2">{showTransactions ? "▲" : "▼"}</span>
           </button>
           {/* Submenu appears below the Transactions button */}
@@ -54,34 +55,34 @@ function NavigationDrawer({ onLogout }: { onLogout: () => void }) {
             >
               <li>
                 <button
-                  className="w-full text-left hover:bg-blue-900 rounded px-3 py-2"
+                  className="w-full text-left hover:bg-blue-900 rounded px-3 py-2 flex items-center gap-2"
                   onClick={() => router.push("/transactions/new")}
                 >
-                  New Order
+                  <FaPlus /> New Order
                 </button>
               </li>
               <li>
                 <button
-                  className="w-full text-left hover:bg-blue-900 rounded px-3 py-2"
+                  className="w-full text-left hover:bg-blue-900 rounded px-3 py-2 flex items-center gap-2"
                   onClick={() => router.push("/transactions/activerunning")}
                 >
-                  Active Orders
+                  <FaThLarge /> Active Orders
                 </button>
               </li>
               <li>
                 <button
-                  className="w-full text-left hover:bg-blue-900 rounded px-3 py-2"
+                  className="w-full text-left hover:bg-blue-900 rounded px-3 py-2 flex items-center gap-2"
                   onClick={() => router.push("/transactions/ordermobile")}
                 >
-                  Orders From Mobile
+                  <FaMobileAlt /> Orders From Mobile
                 </button>
               </li>
               <li>
                 <button
-                  className="w-full text-left hover:bg-blue-900 rounded px-3 py-2"
+                  className="w-full text-left hover:bg-blue-900 rounded px-3 py-2 flex items-center gap-2"
                   onClick={() => router.push("/transactions/history")}
                 >
-                  Orders History
+                  <FaHistory /> Orders History
                 </button>
               </li>
             </ul>
@@ -89,48 +90,49 @@ function NavigationDrawer({ onLogout }: { onLogout: () => void }) {
         </li>
         <li>
           <button
-            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2"
+            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2 flex items-center gap-2"
             onClick={() => router.push("/machines")}
           >
-            Machines
+            <FaCog /> Machines
           </button>
         </li>
         <li>
           <button
-            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2"
+            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2 flex items-center gap-2"
             onClick={() => router.push("/dashboard")}
           >
-            Lots
+            <FaThLarge /> Lots
           </button>
         </li>
         <li>
           <button
-            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2"
+            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2 flex items-center gap-2"
             onClick={() => router.push("/dashboard")}
           >
-            Group Access
+            <FaUserShield /> Group Access
           </button>
         </li>
         <li>
           <button
-            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2"
+            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2 flex items-center gap-2"
             onClick={() => router.push("/users")}
           >
-            Users
+            <FaUsers /> Users
           </button>
         </li>
 
         <li>
           <button
-            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2"
+            className="w-full text-left hover:bg-blue-800 rounded px-3 py-2 flex items-center gap-2"
             onClick={() => router.push("/fcm-messaging")}
           >
-            Send Message
+            <FaEnvelope /> Send Message
           </button>
         </li>
       </ul>
       <button
-        className="m-4 bg-blue-100 text-blue-700 px-4 py-2 rounded font-semibold hover:bg-blue-100"
+        className="w-full bg-blue-100 text-blue-700 px-4 py-2 rounded font-semibold hover:bg-blue-200 mb-2 self-end"
+        style={{ marginTop: "auto" }}
         onClick={onLogout}
       >
         Logout

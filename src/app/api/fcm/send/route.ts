@@ -6,7 +6,7 @@ import fs from 'fs';
 
 // Initialize Firebase Admin SDK only once
 if (!firebaseadmin.apps.length) {
-  const serviceAccountPath = path.join(process.cwd(), 'mimolaundry-1a355-firebase-adminsdk-fbsvc-53d9cf86bb.json'); // <-- use the new file
+  const serviceAccountPath = path.join(process.cwd(), 'mimolaundry-1a355-firebase-adminsdk-fbsvc-9423fb5ef4.json'); // <-- use the new file
   const serviceAccount = JSON.parse(fs.readFileSync(serviceAccountPath, 'utf8'));
   firebaseadmin.initializeApp({
     credential: firebaseadmin.credential.cert(serviceAccount),
@@ -26,6 +26,11 @@ export async function POST(request: Request) {
       notification: {
         title: 'New Message',
         body: message,
+      },
+      data: {
+        // Optional: Add custom data for in-app handling
+        messageId: Date.now().toString(),
+        type: 'in-app-message',
       },
       token: fcmid,
     };
